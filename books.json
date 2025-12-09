@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Harry Potter and the Philosopher’s Stone",
+    "author": "J.K. Rowling",
+    "image": "https://i5.walmartimages.com/seo/Harry-Potter-Harry-Potter-and-the-Prisoner-of-Azkaban-Harry-Potter-Book-3-Minalima-Edition-Hardcover-9781338815283_5e00256d-a3f9-4b5f-bf0a-24b11f87b1a6.94884053afaf1c426efcdd52f979c14a.jpeg",
+    "taken": false
+  },
+  {
+    "title": "Sherlock Homes",
+    "author": "Sir Arther Canan Doyel",
+    "image": "https://tse4.mm.bing.net/th/id/OIP.Vv99OcOnFG37ZpgYGI5PhgHaJZ?rs=1&pid=ImgDetMain&o=7&rm=3",
+    "taken": false
+  },
+  {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "image": "https://tse1.explicit.bing.net/th/id/OIP.1rNUR9cNB-u7bRMe-B7W8QHaLL?rs=1&pid=ImgDetMain&o=7&rm=3",
+    "taken": false
+  },
+  {
+    "title": "One Hundred Years of Solitude",
+    "author": "Gabriel García Márquez",
+    "image": "https://th.bing.com/th/id/R.2f5723f91c42aa266c4084c8dac0173b?rik=WqEq0UCCrFLBWQ&riu=http%3a%2f%2f1.bp.blogspot.com%2f-hM-iSBej13E%2fT9GuLsnNjRI%2fAAAAAAAADHw%2fzb_HPkmqkzA%2fs1600%2fonehundredyearsofsolitude.jpg&ehk=yQP8IRruyFY2iuHkY3fUp8MVT3CZnBKJXVpPu7anSE0%3d&risl=&pid=ImgRaw&r=0",
+    "taken": false
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "image": "https://cdn.britannica.com/21/182021-050-666DB6B1/book-cover-To-Kill-a-Mockingbird-many-1961.jpg",
+    "taken": false
+  },
+  {
+    "title": "Murder Takes a Vacation",
+    "author": "Laura Lippman",
+    "image": "https://m.media-amazon.com/images/I/71JjgJFYxwL._SL1500_.jpg",
+    "taken": false
+  },
+  {
+    "title": "Strange Pictures",
+    "author": "Uketsu",
+    "image": "https://image.ebooks.com/cover/211416535.jpg?width=498&height=750&quality=85",
+    "taken": false
+  }
+]

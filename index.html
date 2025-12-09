@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Exchange System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadBooks()">
+
+<nav>
+    <button class="active" onclick="showSection('home', this)">Home</button>
+    <button onclick="showSection('list', this)">Books</button>
+    <button onclick="showSection('add', this)">Add Book</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="section">
+     <h1>📚 Book Exchange System</h1>
+       
+    <p>Exchange books with your friends easily.</p>
+
+    <div class="stats">
+        <div>Total: <span id="totalCount">0</span></div>
+        <div>Available: <span id="availableCount">0</span></div>
+        <div>Taken: <span id="takenCount">0</span></div>
+    </div>
+</div>
+
+<!-- BOOK LIST -->
+<div id="list" class="section" style="display:none">
+    <h2>All Books</h2>
+
+    <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search by title or author"
+        oninput="renderBooks()"
+    >
+
+    <select id="sort" onchange="renderBooks()">
+        <option value="az">Sort A–Z</option>
+        <option value="za">Sort Z–A</option>
+    </select>
+
+    <div id="bookList"></div>
+</div>
+
+<!-- ADD BOOK -->
+<div id="add" class="section" style="display:none">
+    <h2>Add Book</h2>
+
+    <input id="title" placeholder="Book title">
+    <input id="author" placeholder="Author name">
+    <input id="image" placeholder="Book image URL">
+    <button onclick="addBook()">Add Book</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
