@@ -1,68 +1,55 @@
-/*const API_URL = "http://localhost:3000/books";
+const API_URL = "http://localhost:3000/books";
 let allBooks = [];
 
-// MEMBER LOGIN
-function saveMember() {
-    const name = document.getElementById("memberNameInput").value.trim();
-    if (!name) return alert("Enter your name!");
-    localStorage.setItem("memberName", name);
-    initMember();
-}
-
-function initMember() {
-    const name = localStorage.getItem("memberName");
-    if (name) {
-        document.getElementById("memberInfo").innerText = `👤 Logged in as: ${name}`;
-        document.querySelector(".menu").style.display = "block";
-        document.getElementById("loginSection").style.display = "none";
-        showSection('home', document.querySelector(".menu button.active"));
+function protect() {
+    if (!localStorage.getItem("loggedIn")) {
+        window.location.href = "login.html";
     }
+    document.getElementById("userName").innerText =
+        localStorage.getItem("currentUser");
 }
 
-initMember();
-
-// MENU + PAGE SWITCH
-function showSection(id, btn) {
-    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
-
-    document.querySelectorAll('.menu button').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
-
-    renderBooks();
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
 }
 
-// LOAD BOOKS
 async function loadBooks() {
     const res = await fetch(API_URL);
     allBooks = await res.json();
-    updateCounts();
+    updateStats();
     renderBooks();
 }
 
-loadBooks();
+// ✅ SECTION SWITCHING (HOME / BOOKS / ADD)
+function showSection(id) {
+    document.querySelectorAll(".section").forEach(sec => {
+        sec.style.display = "none";
+    });
 
-// COUNTS
-function updateCounts() {
-    document.getElementById("totalCount").innerText = allBooks.length;
-    document.getElementById("availableCount").innerText =
-        allBooks.filter(b => !b.taken).length;
-    document.getElementById("takenCount").innerText =
-        allBooks.filter(b => b.taken).length;
+    document.getElementById(id).style.display = "block";
+
+    // Render books only when opening book page
+    if (id === "books") {
+        renderBooks();
+    }
 }
 
-// ADD BOOK
 async function addBook() {
-    const title = document.getElementById("title").value.trim();
-    const author = document.getElementById("author").value.trim();
-    const image = document.getElementById("image").value.trim();
+    const titleInput = document.getElementById("title");
+    const authorInput = document.getElementById("author");
+    const imageInput = document.getElementById("image");
+
+    const title = titleInput.value.trim();
+    const author = authorInput.value.trim();
+    const image = imageInput.value.trim();
 
     if (!title || !author) {
-        alert("Please fill all fields");
+        alert("Please fill title and author");
         return;
     }
 
-    await fetch("http://localhost:3000/books", {
+    await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -73,121 +60,30 @@ async function addBook() {
         })
     });
 
-    document.getElementById("title").value = "";
-    document.getElementById("author").value = "";
-    document.getElementById("image").value = "";
+    // ✅ CLEAR INPUTS
+    titleInput.value = "";
+    authorInput.value = "";
+    imageInput.value = "";
 
-    loadBooks();
-    showSection('list', document.querySelector(".menu button:nth-child(2)"));
+    // ✅ RELOAD & SHOW BOOKS
+    await loadBooks();
+    showSection("books");
 }
 
 
-    // clear input fields
-    document.getElementById("title").value = "";
-    document.getElementById("author").value = "";
-
-    loadBooks();
-    showSection('list', document.querySelector(".menu button:nth-child(2)"));
-
-
-// MARK TAKEN
-async function markTaken(id) {
-    await fetch(`${API_URL}/${id}`, { method: "PUT" });
-    loadBooks();
-}
-
-// RENDER BOOKS
-function renderBooks() {
-    const list = document.getElementById("bookList");
-    if (!list) return;
-    list.innerHTML = "";
-
-    let books = [...allBooks];
-    const search = searchInput?.value.toLowerCase() || "";
-    const sortType = sort?.value || "az";
-
-    books = books.filter(b =>
-        b.title.toLowerCase().includes(search) ||
-        b.author.toLowerCase().includes(search)
-    );
-
-    books.sort((a,b) =>
-        sortType === "az" ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)
-    );
-
-    books.forEach((b, i) => {
-    list.innerHTML += `
-    <div class="book-card ${b.taken ? "taken" : ""}">
-        <img src="${b.image || 'https://via.placeholder.com/150'}" class="book-img">
-        <h3>${b.title}</h3>
-        <p>${b.author}</p>
-        ${!b.taken ? `<button onclick="markTaken(${i})">Mark Taken</button>` : "Taken"}
-    </div>`;
-});
-
-} */
-
-const API_URL = "http://localhost:3000/books";
-let allBooks = [];
-
-// Load books
-async function loadBooks() {
-    const res = await fetch(API_URL);
-    allBooks = await res.json();
-    updateStats();
-    renderBooks();
-}
-
-// Navigation
-function showSection(id, btn) {
-    document.querySelectorAll(".section").forEach(s => s.style.display = "none");
-    document.getElementById(id).style.display = "block";
-
-    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    renderBooks();
-}
-
-// Add book
-async function addBook() {
-    const title = document.getElementById("title").value.trim();
-    const author = document.getElementById("author").value.trim();
-    const image = document.getElementById("image").value.trim();
-
-    if (!title || !author) return alert("Fill all fields");
-
-    await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, author, image })
-    });
-
-    document.getElementById("title").value = "";
-    document.getElementById("author").value = "";
-    document.getElementById("image").value = "";
-
-    loadBooks();
-    showSection("list", document.querySelectorAll("nav button")[1]);
-}
-
-// Render books (✅ SEARCH & SORT FIXED)
 function renderBooks() {
     const list = document.getElementById("bookList");
     if (!list) return;
 
-    const search = document.getElementById("searchInput")?.value.toLowerCase() || "";
+    const search =
+        document.getElementById("searchInput")?.value.toLowerCase() || "";
     const sort = document.getElementById("sort")?.value || "az";
 
-    let books = [...allBooks];
-
-    // ✅ Search
-    books = books.filter(b =>
+    let books = [...allBooks].filter(b =>
         b.title.toLowerCase().includes(search) ||
         b.author.toLowerCase().includes(search)
     );
 
-    // ✅ Sort
     books.sort((a, b) =>
         sort === "az"
             ? a.title.localeCompare(b.title)
@@ -203,34 +99,40 @@ function renderBooks() {
             <h3>${b.title}</h3>
             <p>${b.author}</p>
 
-            ${!b.taken 
-                ? `<button onclick="markTaken(${i})">Mark Taken</button>` 
-                : `<span>Taken</span>`
+            ${
+                b.taken
+                ? `<span style="color:red;"><b>TAKEN</b></span>`
+                : `<button onclick="markTaken(${i})">Mark Taken</button>`
             }
-            <button class="delete" onclick="deleteBook(${i})">Delete</button>
-        </div>`;
+        </div>
+        `;
     });
 }
 
-// Mark taken
+
+    books.sort((a,b)=> sort==="az"
+        ? a.title.localeCompare(b.title)
+        : b.title.localeCompare(a.title));
+
+    list.innerHTML = "";
+    books.forEach((b,i)=>{
+        list.innerHTML += `
+        <div class="book-card">
+            <img src="${b.image||'https://via.placeholder.com/150'}">
+            <h3>${b.title}</h3>
+            <p>${b.author}</p>
+        </div>`;
+    });
 async function markTaken(id) {
-    await fetch(`${API_URL}/${id}`, { method: "PUT" });
+    await fetch(`${API_URL}/${id}`, {
+        method: "PUT"
+    });
     loadBooks();
 }
 
-// Delete book
-async function deleteBook(id) {
-    if (!confirm("Delete this book?")) return;
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-    loadBooks();
-}
-
-// Stats
 function updateStats() {
-    document.getElementById("totalCount").innerText = allBooks.length;
-    document.getElementById("availableCount").innerText =
-        allBooks.filter(b => !b.taken).length;
-    document.getElementById("takenCount").innerText =
-        allBooks.filter(b => b.taken).length;
+    totalCount.innerText = allBooks.length;
+    availableCount.innerText = allBooks.filter(b=>!b.taken).length;
+    takenCount.innerText = allBooks.filter(b=>b.taken).length;
 }
 
