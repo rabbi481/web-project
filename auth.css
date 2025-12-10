@@ -1,0 +1,41 @@
+.auth-bg {
+    margin: 0;
+    height: 100vh;
+    background:
+      linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+      url("https://images.unsplash.com/photo-1507842217343-583bb7270b66");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.auth-box {
+    background: white;
+    padding: 35px;
+    width: 320px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 10px;
+    background: #c0392b;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-box a {
+    color: #c0392b;
+    font-weight: bold;
+}
