@@ -110,3 +110,79 @@ input, select {
 .book-card .delete {
     background: red;
 }
+#userInfo {
+    text-align: right;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+body { margin:0; font-family: Arial; background:#f4f6f8; }
+
+nav {
+    background:#4a90e2;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
+    color:white;
+}
+
+.home-bg {
+    min-height: 95vh;
+    background:
+      linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
+      url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.home-box {
+    color:white;
+    text-align:center;
+    z-index: 2;
+
+}
+
+.section {
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:12px;
+}
+
+#bookList {
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+    gap:15px;
+}
+
+.book-card {
+    padding:15px;
+    background:#fff;
+    border-radius:10px;
+    text-align:center;
+}
+
+.book-card img {
+    width:100%;
+    height:150px;
+    object-fit:cover;
+}
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.home-actions {
+    margin-top: 30px;
+}
+
+.home-actions button {
+    margin: 10px;
+    padding: 12px 22px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+}
