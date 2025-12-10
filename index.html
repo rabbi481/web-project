@@ -2,59 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Book Exchange System</title>
+    <title>Book Exchange</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadBooks()">
+
+<body onload="protect(); loadBooks(); showSection('home')">
 
 <nav>
-    <button class="active" onclick="showSection('home', this)">Home</button>
-    <button onclick="showSection('list', this)">Books</button>
-    <button onclick="showSection('add', this)">Add Book</button>
+    <span>📚 Book Exchange</span>
+    <span>Hello, <b id="userName"></b></span>
+    <button onclick="logout()">Logout</button>
 </nav>
 
 <!-- HOME -->
-<div id="home" class="section">
-     <h1>📚 Book Exchange System</h1>
-       
-    <p>Exchange books with your friends easily.</p>
+<section id="home" class="home-bg section">
+    <div class="home-box">
+        <h1>Exchange Books Easily</h1>
+        <p>Your personal book marketplace</p>
 
-    <div class="stats">
-        <div>Total: <span id="totalCount">0</span></div>
-        <div>Available: <span id="availableCount">0</span></div>
-        <div>Taken: <span id="takenCount">0</span></div>
+        <div class="stats">
+            <div>Total: <span id="totalCount">0</span></div>
+            <div>Available: <span id="availableCount">0</span></div>
+            <div>Taken: <span id="takenCount">0</span></div>
+        </div>
+
+        <!-- ✅ HOME BUTTONS -->
+        <div class="home-actions">
+            <button onclick="showSection('books')">📚 View Books</button>
+            <button onclick="showSection('add')">➕ Add Book</button>
+        </div>
     </div>
-</div>
+</section>
 
 <!-- BOOK LIST -->
-<div id="list" class="section" style="display:none">
-    <h2>All Books</h2>
+<section id="books" class="section" style="display:none">
+    <h2>Book List</h2>
 
-    <input 
-        type="text" 
-        id="searchInput" 
-        placeholder="Search by title or author"
-        oninput="renderBooks()"
-    >
-
+    <input id="searchInput" placeholder="Search..." oninput="renderBooks()">
     <select id="sort" onchange="renderBooks()">
-        <option value="az">Sort A–Z</option>
-        <option value="za">Sort Z–A</option>
+        <option value="az">A-Z</option>
+        <option value="za">Z-A</option>
     </select>
 
     <div id="bookList"></div>
-</div>
+
+    <button onclick="showSection('home')">⬅ Back to Home</button>
+</section>
 
 <!-- ADD BOOK -->
-<div id="add" class="section" style="display:none">
+<section id="add" class="section" style="display:none">
     <h2>Add Book</h2>
 
-    <input id="title" placeholder="Book title">
-    <input id="author" placeholder="Author name">
-    <input id="image" placeholder="Book image URL">
+    <input id="title" placeholder="Title">
+    <input id="author" placeholder="Author">
+    <input id="image" placeholder="Image URL">
+
     <button onclick="addBook()">Add Book</button>
-</div>
+    <button onclick="showSection('home')">⬅ Back to Home</button>
+</section>
 
 <script src="app.js"></script>
 </body>
+
 </html>
