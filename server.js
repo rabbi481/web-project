@@ -6,73 +6,50 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Load books from JSON file
+const FILE = "books.json";
+
+// Load books
 const loadBooks = () => {
-  if (!fs.existsSync("books.json")) {
-    fs.writeFileSync("books.json", JSON.stringify([]));
-  }
-  const data = fs.readFileSync("books.json", "utf-8");
-  return JSON.parse(data);
+  if (!fs.existsSync(FILE)) return [];
+  return JSON.parse(fs.readFileSync(FILE));
 };
 
-// Save books to JSON file
+// Save books
 const saveBooks = (books) => {
-  fs.writeFileSync("books.json", JSON.stringify(books, null, 2));
+  fs.writeFileSync(FILE, JSON.stringify(books, null, 2));
 };
 
-// ✅ Get all books
+// Get all books
 app.get("/books", (req, res) => {
   res.json(loadBooks());
 });
 
-// ✅ Add a book
+// Add book
 app.post("/books", (req, res) => {
   const books = loadBooks();
-
-  const newBook = {
-    title: req.body.title,
-    author: req.body.author,
-    image: req.body.image || "",
-    taken: false
-  };
-
-  books.push(newBook);
+  books.push(req.body);
   saveBooks(books);
-
-  res.json({ message: "Book added successfully" });
+  res.json({ message: "Book added" });
 });
 
-// ✅ Mark book as taken
+// Mark as taken
 app.put("/books/:id", (req, res) => {
   const books = loadBooks();
   const id = parseInt(req.params.id);
-
-  if (!books[id]) {
-    return res.status(404).json({ message: "Book not found" });
-  }
-
   books[id].taken = true;
   saveBooks(books);
-
   res.json({ message: "Book marked as taken" });
 });
 
-// ✅ DELETE book
+// Delete book
 app.delete("/books/:id", (req, res) => {
   const books = loadBooks();
   const id = parseInt(req.params.id);
-
-  if (!books[id]) {
-    return res.status(404).json({ message: "Book not found" });
-  }
-
   books.splice(id, 1);
   saveBooks(books);
-
-  res.json({ message: "Book deleted successfully" });
+  res.json({ message: "Book deleted" });
 });
 
-// ✅ Start server
-app.listen(3000, () => {
-  console.log("✅ Server running on http://localhost:3000");
-});
+app.listen(3000, () =>
+  console.log("✅ Server running on http://localhost:3000")
+);
