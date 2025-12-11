@@ -21,7 +21,7 @@ async function loadBooks() {
     renderBooks();
 }
 
-// ✅ SECTION SWITCHING (HOME / BOOKS / ADD)
+//  SECTION SWITCHING (HOME / BOOKS / ADD)
 function showSection(id) {
     document.querySelectorAll(".section").forEach(sec => {
         sec.style.display = "none";
@@ -60,12 +60,12 @@ async function addBook() {
         })
     });
 
-    // ✅ CLEAR INPUTS
+    //  CLEAR INPUTS
     titleInput.value = "";
     authorInput.value = "";
     imageInput.value = "";
 
-    // ✅ RELOAD & SHOW BOOKS
+    //  RELOAD & SHOW BOOKS
     await loadBooks();
     showSection("books");
 }
@@ -135,4 +135,5 @@ function updateStats() {
     availableCount.innerText = allBooks.filter(b=>!b.taken).length;
     takenCount.innerText = allBooks.filter(b=>b.taken).length;
 }
+
 
